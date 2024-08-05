@@ -1,0 +1,44 @@
+<div class="modal fade" id="bid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="myModalLabel">Declare Trump and Bid<button type="button" class="btn btn-outline-secondary float-right" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button></h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="trump">Trump:</label>
+              <select [(ngModel)]="bid.trump" id="trump" name="trump" class="form-control">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="number">Bid:</label>
+              <select [(ngModel)]="bid.bid" id="number" name="number" class="form-control">
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="42">42</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="declareBid()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Declare Bid</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+.domino {
+  border: 2px solid #444444;
+  padding: 2px;
+  float: left;
+}
+.domino-selected {
+  border: 2px solid firebrick;
+}
+.player-1 .domino {
+  cursor: pointer;
+}
+.domino-v {
+  height: 100px;
+  width: 40px;
+  margin: 3px;
+}
+.domino-h {
+  height: 40px;
+  width: 102px;
+  margin: 3px;
+}
+.domino-h .side {
+  float: left;
+  width: 47px;
+}
+.domino-v .side-primary {
+  border-bottom: 2px solid #222222;
+  padding-bottom: 2px;
+}
+.domino-h .side-primary {
+  border-right: 2px solid #222222;
+}
+.domino-v .side-secondary {
+  padding-top: 3px;
+}
+.domino-h .side-secondary {
+  padding-left: 3px;
+}
+
+/* Dot drawn on the domino for each number, starts hidden */
+.dot {
+  display: block;
+  float: left;
+  width: 12px;
+  height: 12px;
+  background-color: #555555;
+  border-radius: 50px;
+  visibility: hidden;
+}
+.domino-v .dot {
+  margin: 1px 2px;
+}
+.domino-h .dot {
+  margin: 2px 1px;
+}
+
+/* One (1) dot - Vertical */
+.domino-v .side-1 .dot:nth-child(3) {
+  visibility: visible;
+  position: relative;
+  left: 7px;
+}
+
+/* One (1) dot - Horizontal */
+.domino-h .side-1 .dot:nth-child(2) {
+  visibility: visible;
+  position: relative;
+  top: 8px;
+}
+
+/* Two (2) dots - Vertical */
+.domino-v .side-2 .dot:nth-child(2), .domino-v .side-2 .dot:nth-child(5) {
+  visibility: visible;
+}
+
+/* Two (2) dots - Horizontal */
+.domino-h .side-2 .dot:nth-child(1), .domino-h .side-2 .dot:nth-child(6) {
+  visibility: visible;
+}
+
+/* Three (3) dots - Vertical */
+.domino-v .side-3 .dot:nth-child(2), .domino-v .side-3 .dot:nth-child(3), .domino-v .side-3 .dot:nth-child(5) {
+  visibility: visible;
+}
+.domino-v .side-3 .dot:nth-child(3) {
+  position: relative;
+  left: 8px;
+}
+
+/* Three (3) dots - Horizontal */
+.domino-h .side-3 .dot:nth-child(1), .domino-h .side-3 .dot:nth-child(2), .domino-h .side-3 .dot:nth-child(6) {
+  visibility: visible;
+}
+.domino-h .side-3 .dot:nth-child(2) {
+  position: relative;
+  top: 8px;
+}
+
+/* Four (4) dots - Vertical */
+.domino-v .side-4 .dot:nth-child(1), .domino-v .side-4 .dot:nth-child(2), .domino-v .side-4 .dot:nth-child(5), .domino-v .side-4 .dot:nth-child(6) {
+  visibility: visible;
+}
+
+/* Four (4) dots - Horizontal */
+.domino-h .side-4 .dot:nth-child(1), .domino-h .side-4 .dot:nth-child(3), .domino-h .side-4 .dot:nth-child(4), .domino-h .side-4 .dot:nth-child(6) {
+  visibility: visible;
+}
+
+/* Five (5) dots - Vertical */
+.domino-v .side-5 .dot:nth-child(1), .domino-v .side-5 .dot:nth-child(2), .domino-v .side-5 .dot:nth-child(3), .domino-v .side-5 .dot:nth-child(5), .domino-v .side-5 .dot:nth-child(6) {
+  visibility: visible;
+}
+.domino-v .side-5 .dot:nth-child(3) {
+  position: relative;
+  left: 8px;
+}
+/* Five (5) dots - Horizontal */
+.domino-h .side-5 .dot:nth-child(1), .domino-h .side-5 .dot:nth-child(2), .domino-h .side-5 .dot:nth-child(3), .domino-h .side-5 .dot:nth-child(4), .domino-h .side-5 .dot:nth-child(6) {
+  visibility: visible;
+}
+.domino-h .side-5 .dot:nth-child(2) {
+  position: relative;
+  top: 8px;
+}
+
+/* Six (6) dots - all visible */
+.side-6 .dot {
+  visibility: visible;
+}

@@ -1,0 +1,284 @@
+{
+  "set": [
+    {
+      "id": 1,
+      "primaryName": "double-blank",
+      "secondaryName": "double-blank",
+      "primary": 0,
+      "secondary": 0,
+      "total": 0,
+      "isDouble": true,
+      "isCount": false
+    },
+    {
+      "id": 2,
+      "primaryName": "one-blank",
+      "secondaryName": "blank-one",
+      "primary": 1,
+      "secondary": 0,
+      "total": 1,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 3,
+      "primaryName": "two-blank",
+      "secondaryName": "blank-two",
+      "primary": 2,
+      "secondary": 0,
+      "total": 2,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 4,
+      "primaryName": "three-blank",
+      "secondaryName": "blank-three",
+      "primary": 3,
+      "secondary": 0,
+      "total": 3,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 5,
+      "primaryName": "four-blank",
+      "secondaryName": "blank-four",
+      "primary": 4,
+      "secondary": 0,
+      "total": 4,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 6,
+      "primaryName": "five-blank",
+      "secondaryName": "blank-five",
+      "primary": 5,
+      "secondary": 0,
+      "total": 5,
+      "isDouble": false,
+      "isCount": true
+    },
+    {
+      "id": 7,
+      "primaryName": "six-blank",
+      "secondaryName": "blank-six",
+      "primary": 6,
+      "secondary": 0,
+      "total": 6,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 8,
+      "primaryName": "double-one",
+      "secondaryName": "double-one",
+      "primary": 1,
+      "secondary": 1,
+      "total": 2,
+      "isDouble": true,
+      "isCount": false
+    },
+    {
+      "id": 9,
+      "primaryName": "two-one",
+      "secondaryName": "one-two",
+      "primary": 2,
+      "secondary": 1,
+      "total": 3,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 10,
+      "primaryName": "three-one",
+      "secondaryName": "one-three",
+      "primary": 3,
+      "secondary": 1,
+      "total": 4,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 11,
+      "primaryName": "four-one",
+      "secondaryName": "one-four",
+      "primary": 4,
+      "secondary": 1,
+      "total": 5,
+      "isDouble": false,
+      "isCount": true
+    },
+    {
+      "id": 12,
+      "primaryName": "five-one",
+      "secondaryName": "one-five",
+      "primary": 5,
+      "secondary": 1,
+      "total": 6,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 13,
+      "primaryName": "six-one",
+      "secondaryName": "one-six",
+      "primary": 6,
+      "secondary": 1,
+      "total": 7,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 14,
+      "primaryName": "double-two",
+      "secondaryName": "double-two",
+      "primary": 2,
+      "secondary": 2,
+      "total": 4,
+      "isDouble": true,
+      "isCount": false
+    },
+    {
+      "id": 15,
+      "primaryName": "three-two",
+      "secondaryName": "two-three",
+      "primary": 3,
+      "secondary": 2,
+      "total": 5,
+      "isDouble": false,
+      "isCount": true
+    },
+    {
+      "id": 16,
+      "primaryName": "four-two",
+      "secondaryName": "two-four",
+      "primary": 4,
+      "secondary": 2,
+      "total": 6,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 17,
+      "primaryName": "five-two",
+      "secondaryName": "two-five",
+      "primary": 5,
+      "secondary": 2,
+      "total": 7,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 18,
+      "primaryName": "six-two",
+      "secondaryName": "two-six",
+      "primary": 6,
+      "secondary": 2,
+      "total": 8,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 19,
+      "primaryName": "double-three",
+      "secondaryName": "double-three",
+      "primary": 3,
+      "secondary": 3,
+      "total": 6,
+      "isDouble": true,
+      "isCount": false
+    },
+    {
+      "id": 20,
+      "primaryName": "four-three",
+      "secondaryName": "three-four",
+      "primary": 4,
+      "secondary": 3,
+      "total": 7,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 21,
+      "primaryName": "five-three",
+      "secondaryName": "three-five",
+      "primary": 5,
+      "secondary": 3,
+      "total": 8,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 22,
+      "primaryName": "six-three",
+      "secondaryName": "three-six",
+      "primary": 6,
+      "secondary": 3,
+      "total": 9,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 23,
+      "primaryName": "double-four",
+      "secondaryName": "double-four",
+      "primary": 4,
+      "secondary": 4,
+      "total": 8,
+      "isDouble": true,
+      "isCount": false
+    },
+    {
+      "id": 24,
+      "primaryName": "five-four",
+      "secondaryName": "four-five",
+      "primary": 5,
+      "secondary": 4,
+      "total": 9,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 25,
+      "primaryName": "six-four",
+      "secondaryName": "four-six",
+      "primary": 6,
+      "secondary": 4,
+      "total": 10,
+      "isDouble": false,
+      "isCount": true
+    },
+    {
+      "id": 26,
+      "primaryName": "double-five",
+      "secondaryName": "double-five",
+      "primary": 5,
+      "secondary": 5,
+      "total": 10,
+      "isDouble": true,
+      "isCount": true
+    },
+    {
+      "id": 27,
+      "primaryName": "six-five",
+      "secondaryName": "five-six",
+      "primary": 6,
+      "secondary": 5,
+      "total": 11,
+      "isDouble": false,
+      "isCount": false
+    },
+    {
+      "id": 28,
+      "primaryName": "double-six",
+      "secondaryName": "double-six",
+      "primary": 6,
+      "secondary": 6,
+      "total": 12,
+      "isDouble": true,
+      "isCount": false
+    }
+  ]
+}
