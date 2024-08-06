@@ -10,13 +10,17 @@ import { Component42 } from './42.component';
 import { PlayerComponent } from './components/player/player.component';
 import { DominoComponent } from './components/domino/domino.component';
 import { BidComponent } from './components/bid/bid.component';
+import { TrickComponent } from './components/trick/trick.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     Component42,
     PlayerComponent,
     DominoComponent,
-    BidComponent
+    BidComponent,
+    TrickComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

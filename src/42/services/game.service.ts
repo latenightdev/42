@@ -6,6 +6,7 @@ import { DominoDTO } from '../models/dominioDTO';
 import { Player } from '../models/player';
 import { Bid } from '../models/bid';
 import { Trick } from '../models/trick';
+import { Modal } from 'bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,8 @@ export class GameService {
   trick = 0;
   bid!: Bid;
   log: Array<string> = [];
+  isTestMode = false;
+  deliberationTimeout = 1000;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -58,6 +61,7 @@ export class GameService {
   }
 
   dealNewHand(): void {
+    this.isTestMode = false;
     this.clearAllHands();
     this.set = this.createDominoes();
     const that = this;
@@ -72,6 +76,32 @@ export class GameService {
     this.turn = 1;
     this.trick = 1;
     this.board = new Trick(this.trick);
+  }
+
+  dealTestHand(): void {
+    this.isTestMode = true;
+    this.clearAllHands();
+    this.set = this.createDominoes();
+    const testTrick = new Trick(1);
+    testTrick.set = this.set;
+    this.grave.push(testTrick);
+    this.activePlayer = this.players[0];
+  }
+
+  dealTestDomino(domino: Domino): void {
+    if (this.isTestMode) {
+      this.activePlayer.addDominoToHand(domino);
+      this.grave[0].set.splice(this.grave[0].set.indexOf(domino), 1);
+      this.activePlayer = this.activePlayer.index === 3 ? this.players[0] : this.players[this.activePlayer.index + 1];
+      if (this.grave[0].set.length === 0) {
+        this.isTestMode = false;
+        this.grave = [];
+        this.activePlayer = this.players[0];
+        this.turn = 1;
+        this.trick = 1;
+        this.board = new Trick(this.trick);        
+      }
+    }
   }
 
   // Player 1 leads the trick by selecting a domino - remove domino from hand, place on board, set as winning domino, and switch to AI
@@ -120,7 +150,7 @@ export class GameService {
         console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.bid.trump));
         this.followWithDomino(lowDomino);
       }
-    }, 4000);
+    }, this.deliberationTimeout);
   }
 
   followWithDomino(domino: Domino): void {
@@ -128,27 +158,32 @@ export class GameService {
     this.board.set.push(domino);
     this.log.push(this.activePlayer.name + ' played a ' + domino.getValue(this.bid.trump));
     if (!this.board.hasLeadDouble(this.leadValue)) {
-      if (domino.isDouble || domino.total > this.leadDomino.total) {
+      if (domino.isLead(this.leadValue) && (domino.isDouble || (domino.total > this.leadDomino.total))) {
         this.winningDomino = domino;
         this.board.winningDomino = domino;
         this.board.winningPlayer = this.activePlayer;
       }
     }
     this.activePlayer.isDeliberating = false;
+    // TODO: end of trick tbd by # of dominos in current trick
     if (this.activePlayer.index === 3) {
       // End of trick
-      this.endTrick();
-    }
-    this.activePlayer = this.activePlayer.index === 3 ? this.players[0] : this.players[this.activePlayer.index + 1];
-    this.turn++;
-    if (this.activePlayer.index !== 0) {
-      this.followAI();
+      //this.endTrick();
+      const trickElement = document.getElementById('trick') as HTMLElement;
+      const trickModal = new Modal(trickElement);
+      trickModal.show();
+    } else {
+      // TODO: if end trick do not follow normal activePlayer flow.. winning player plays next.. endTrick returns activePlayer?
+      this.activePlayer = this.activePlayer.index === 3 ? this.players[0] : this.players[this.activePlayer.index + 1];
+      this.turn++;
+      if (this.activePlayer.index !== 0) {
+        this.followAI();
+      }
     }
   }
 
   endTrick(): void {
     let score = 0;
-    // TODO: toast or confirmation popup with results of this trick
     for(let i = 0; i < 4; i++) {
       const domino = this.board.set[i];
       if (domino.isCount) {
@@ -166,6 +201,11 @@ export class GameService {
     // TODO: start new Trick
     this.trick++;
     this.board = new Trick(this.trick);
+    /*
+    if (this.activePlayer.index !== 0) {
+      this.followAI();
+    } 
+    */   
   }
 
   findHighDomino(dominoes: Array<Domino>): Domino {

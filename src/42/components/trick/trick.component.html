@@ -1,0 +1,30 @@
+<div class="modal fade" id="trick" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="myModalLabel">Trick Results<button type="button" class="btn btn-outline-secondary float-end" data-bs-dismiss="modal" aria-label="Close"><mat-icon fontIcon="close"></mat-icon></button></h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="hand">
+              <div *ngFor="let domino of gameService.board?.set">
+                <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>
+              </div>
+            </div>            
+            <ul *ngIf="gameService.board?.leadDomino">
+              <li>Trick #: {{ gameService.board.number }}</li>
+              <li>Count: {{ gameService.board.count }}</li>
+              <li>Lead: {{ gameService.board.leadDomino.getValue(gameService.bid.trump) }}</li>
+              <li>Winning Domino: {{ gameService.board.winningDomino.getValue(gameService.bid.trump) }}</li>
+              <li>Winning Player: {{ gameService.board.winningPlayer.name }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="onClickNext()" type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Next Trick</button>
+      </div>
+    </div>
+  </div>
+</div>

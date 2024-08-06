@@ -1,10 +1,27 @@
+TODO:
+- domino.getValue/getName should depend on the LEAD value not necessarily the trump value
+- score should be determined before showing trick modal
+  - audit which things should happen before/after trick modal
+- cleanup state
+  - trump, bid amount to player's sub-heading
+  - active player, hasDeclaredBid not needed
+  - turn, trump, bid could also live in nav
+  - is turn necessary at all?  trick # / grave.length should be enough
+- clear log on new game
+  - other stuff needs to be reset too - bid, grave on debug game, etc
+- bug: domino name incorrect (ex: 2-3 follows a 2-2 and is called 3-2 in log)
+- prompt to enter Player 1 name (during bid for now)
+- flow: noCash argument to both lowest/highest method
+
+DONE:
+* end trick pops a modal with trick results and click button to start next trick
+* setup navigation bar
+* deliberation timeout to variable
+* log should be set height and scroll
 * add text activity log that shows every move
 * add score total next to each player
 * fix player button designn
 * fix bid modal design
-- setup navigation bar
-  - deal button to nav
+* EPIC: test bed needed (wow you pretty clever)
 * bug: when AI plays higher than lead domino and lead is double
-- continue deliberation flow
-  * when no matches to lead - play lowest domino
-    - LATER: noCash argument to both lowest/highest method
+* flow: when no matches to lead - play lowest domino

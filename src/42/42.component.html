@@ -1,10 +1,6 @@
+<navigation (emitNewGame)="onEmitNew()" (emitDebugGame)="onEmitDebug()"></navigation>
 <div class="container">
   <div class="view-game">
-
-    <div class="row">
-      <button class="btn btn-outline-primary float-end" (click)="onClickDeal()">Deal</button>
-    </div>
-
     <div class="board turn-1">
 
       <!-- Row 1 - Player 3, State Box  -->
@@ -71,7 +67,7 @@
               <div *ngFor="let trick of gameService.grave">
                 <span class="info-icon"><i class="fas fa-info-circle" (click)="gameService.debug(trick)"></i></span>
                 <span *ngFor="let domino of trick.set">
-                  <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>
+                  <domino [primary]="domino.primary" [secondary]="domino.secondary" (click)="onClickGrave(domino)"></domino>
                 </span>
               </div>
             </div>
@@ -84,3 +80,4 @@
   </div>
 </div>
 <bid (emitBid)="onDeclareBid($event)"></bid>
+<trick (emitNextTrick)="onEmitNext()"></trick>

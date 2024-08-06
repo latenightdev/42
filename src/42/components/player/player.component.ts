@@ -34,5 +34,4 @@ export class PlayerComponent implements OnInit {
   playDomino(): void {
     this.gameService.leadWithDomino(this.player.selected[0]);
   }
-
 }
