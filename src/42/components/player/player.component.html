@@ -1,10 +1,10 @@
 <div class="player player-{{player.number}}">
   <h2>{{ player.name }}
-    <!--<span>Score: {{ player.score }}</span>-->
     <span class="turn" *ngIf="gameService.activePlayer === player"> * </span>
     <mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(player)"></mat-icon>
     <span class="loading-icon" *ngIf="player.isDeliberating || (player.index === 0 && gameService.activePlayer?.index === 0)"><img src="/assets/loading.gif" /></span>
   </h2>
+  <p>Score: {{ player.score }}</p>
   <div class="hand">
     <div *ngFor="let domino of player.hand">
       <domino [primary]="domino.primary" [secondary]="domino.secondary" [selected]="isDominoSelected(domino)" (click)="clickDomino(domino)"></domino>

@@ -1,0 +1,10 @@
+* add text activity log that shows every move
+* add score total next to each player
+* fix player button designn
+* fix bid modal design
+- setup navigation bar
+  - deal button to nav
+* bug: when AI plays higher than lead domino and lead is double
+- continue deliberation flow
+  * when no matches to lead - play lowest domino
+    - LATER: noCash argument to both lowest/highest method

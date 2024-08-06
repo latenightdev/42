@@ -21,7 +21,15 @@ export class Domino {
     this.isCount = dominoDTO.isCount;
   }
 
-  getValue(): string {
-    return this.primary + '-' + this.secondary;
+  getValue(trump: number): string {
+    return this.secondary === trump ? this.secondary + '-' + this.primary : this.primary + '-' + this.secondary;
+  }
+
+  getName(trump: number): string {
+    return this.secondary === trump ? this.secondaryName : this.primaryName;
+  }
+
+  isLead(lead: number): boolean {
+    return this.primary === lead || this.secondary === lead;
   }
 }

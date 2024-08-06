@@ -1,0 +1,15 @@
+* Service strategy
+  - domino.service
+    - fetch json/build deck
+    - any domino-specific methods
+  - game.service
+    - main thread, current state
+  - player.service
+    - all player-specific commands
+
+* AI deliberation flow (Condition => Instruction)
+  - 1. Condition: player hand.length === 1 => Instruction: playDomino(player's.hand[0])
+  - 2. Condition: player hand.length > 1
+      2a. Condition: player hand has matches to lead
+      2b. Condition: player hand does not have matches to lead
+

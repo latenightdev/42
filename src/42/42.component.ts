@@ -12,7 +12,6 @@ export class Component42 implements OnInit {
   constructor(public gameService: GameService) { }
 
   ngOnInit() {
-    console.log('42.component loaded!');
     this.gameService.init();
     this.setPlayers();
   }
@@ -30,7 +29,6 @@ export class Component42 implements OnInit {
   }
 
   onClickDeal() {
-    console.log('Deal button clicked!');
     this.gameService.dealNewHand();
   }
 }

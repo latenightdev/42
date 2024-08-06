@@ -12,6 +12,7 @@ import { Trick } from '../models/trick';
 })
 export class GameService {
 
+  // TODO: create state object
   originalSet: Array<DominoDTO> = [];
   set: Array<Domino> = [];
   board!: Trick;
@@ -20,12 +21,13 @@ export class GameService {
   activePlayer!: Player;
   hasDeclaredBid = false;
   // leadDomino, winningDomino, and leadValue may all be a part of Trick class (Board)
-  leadDomino!: Domino;
-  winningDomino!: Domino;
+  leadDomino!: Domino;  // TODO: needed? or only on trick
+  winningDomino!: Domino;  // TOOD: needed? or only on trick
   leadValue!: number;
   turn = 0;
   trick = 0;
   bid!: Bid;
+  log: Array<string> = [];
 
   constructor(private httpClient: HttpClient) { }
 
@@ -76,6 +78,7 @@ export class GameService {
   leadWithDomino(domino: Domino): void {
     this.players[0].removeDominoFromHand(domino);
     this.board.set.push(domino);
+    this.log.push(this.players[0].name + ' played a ' + domino.getValue(this.bid.trump));
     this.leadDomino = domino;
     this.winningDomino = domino;
     this.leadValue = this.bid.trump === this.leadDomino.secondary ? this.leadDomino.secondary : this.leadDomino.primary;
@@ -88,9 +91,15 @@ export class GameService {
   }
 
   followAI(): void {
-    console.log('Deliberating...');
+    console.log(this.activePlayer.name + ' is deliberating...');
     this.activePlayer.isDeliberating = true;
     setTimeout(() => {
+      // Condition #1: Last domino
+      if (this.activePlayer.hand.length === 1) {
+        console.log(this.activePlayer.name + ' has only 1 domino remaining, playing...');
+        this.followWithDomino(this.activePlayer.hand[0]);
+      }
+      // Condition #2: Follow lead domino
       const matches: Array<Domino> = [];
       for(let i = 0; i < this.activePlayer.hand.length; i++) {
         const domino: Domino  = this.activePlayer.hand[i];
@@ -99,10 +108,17 @@ export class GameService {
         }
       }
       if (matches.length) {
+        // Conditon #2a: Follow with lowest match 
         console.log(matches.length + ' matches found to follow lead value of: ' + this.leadValue);
-        const highestDomino: Domino = this.findHighestDomino(matches);
-        console.log('Following with highest match to lead: ' + highestDomino.getValue());
-        this.followWithDomino(highestDomino);
+        const lowDomino: Domino = this.findLowDomino(matches);
+        console.log('Following with lowest match to lead: ' + lowDomino.getValue(this.bid.trump));
+        this.followWithDomino(lowDomino);
+      } else {
+        // Condition #2b: Follow with lowest domino
+        console.log('0 matches found to follow lead value of: ' + this.leadValue);
+        const lowDomino: Domino = this.findLowDomino(this.activePlayer.hand);
+        console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.bid.trump));
+        this.followWithDomino(lowDomino);
       }
     }, 4000);
   }
@@ -110,10 +126,13 @@ export class GameService {
   followWithDomino(domino: Domino): void {
     this.activePlayer.removeDominoFromHand(domino);
     this.board.set.push(domino);
-    if (domino.isDouble || domino.total > this.leadDomino.total) {
-      this.winningDomino = domino;
-      this.board.winningDomino = domino;
-      this.board.winningPlayer = this.activePlayer;
+    this.log.push(this.activePlayer.name + ' played a ' + domino.getValue(this.bid.trump));
+    if (!this.board.hasLeadDouble(this.leadValue)) {
+      if (domino.isDouble || domino.total > this.leadDomino.total) {
+        this.winningDomino = domino;
+        this.board.winningDomino = domino;
+        this.board.winningPlayer = this.activePlayer;
+      }
     }
     this.activePlayer.isDeliberating = false;
     if (this.activePlayer.index === 3) {
@@ -141,25 +160,39 @@ export class GameService {
       this.board.winningPlayer.score += score + 1;
     }
     this.grave.push(this.board);
-    console.log(this.grave);
-    // TODO: start new Trick
+    this.log.push(this.board.winningPlayer.name + ' won trick #' + this.board.number + ', count: ' + score);
     // TODO: control of game may change depending on who won Trick
+    this.activePlayer = this.board.winningPlayer;
+    // TODO: start new Trick
+    this.trick++;
+    this.board = new Trick(this.trick);
   }
 
-  findHighestDomino(dominoes: Array<Domino>): Domino {
-    let highest: Domino = dominoes[0];
+  findHighDomino(dominoes: Array<Domino>): Domino {
+    let high: Domino = dominoes[0];
     for(let i = 1; i < dominoes.length; i++) {
       const domino = dominoes[i];
       if (domino.isDouble) {
-        highest = domino;
-        return highest;
+        high = domino;
+        return high;
       }
-      if (domino.total > highest.total) {
-        highest = domino;
+      if (domino.total > high.total) {
+        high = domino;
       }
     }
-    return highest;
+    return high;
   }
+
+  findLowDomino(dominoes: Array<Domino>): Domino {
+    let low: Domino = dominoes[0];
+    for(let i = 1; i < dominoes.length; i++) {
+      const domino = dominoes[i];
+      if (domino.total < low.total && !domino.isDouble) {
+        low = domino;
+      }
+    }
+    return low;
+  }  
 
   clearAllHands(): void {
     this.players[0].clearHand();

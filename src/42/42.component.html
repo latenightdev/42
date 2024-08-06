@@ -2,17 +2,30 @@
   <div class="view-game">
 
     <div class="row">
-      <a class="btn btn-outline-primary float-right" (click)="onClickDeal()">Deal</a>
+      <button class="btn btn-outline-primary float-end" (click)="onClickDeal()">Deal</button>
     </div>
 
     <div class="board turn-1">
 
-      <!-- Row 1 - Player 3 -->
+      <!-- Row 1 - Player 3, State Box  -->
       <div class="row board-row-1">
         <!-- Player 3 -->
         <div class="col-md-4 offset-md-4">
           <player [player]="gameService.players[2]"></player>
         </div>
+        <!-- State Box -->
+        <div class="col-md-4" *ngIf="gameService.turn > 0">
+          <h4>State</h4>
+          <ul>
+            <li>Active Player: {{ gameService.activePlayer.name }}</li>
+            <li>Turn: {{ gameService.turn }} </li>
+            <li>HasDeclaredBid: {{ gameService.hasDeclaredBid }} </li>
+          </ul>
+          <ul *ngIf="gameService.hasDeclaredBid">
+            <li>Trump: {{ gameService.bid.trump }}</li>
+            <li>Bid: {{ gameService.bid.bid }} </li>
+          </ul>
+        </div>        
       </div>
 
       <!-- Row 2 - Player 2, Board, Player 4 -->
@@ -24,7 +37,7 @@
         <!-- Board -->
         <div class="col-md-4">
           <div id="pit" class="player clearfix">
-            <h2>Board<span class="info-icon"><i class="fas fa-info-circle" (click)="gameService.debug(gameService.board)"></i></span></h2>
+            <h4>Board<span class="info-icon"><i class="fas fa-info-circle" (click)="gameService.debug(gameService.board)"></i></span></h4>
             <div class="hand">
               <div *ngFor="let domino of gameService.board?.set">
                 <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>
@@ -38,30 +51,22 @@
         </div>
       </div>
 
-      <!-- Row 3 - State Box, Player 1, Graveyard -->
+      <!-- Row 3 - Log, Player 1, Graveyard -->
       <div class="row board-row-3">
-        <!-- State Box -->
-        <div class="col-md-4" *ngIf="gameService.turn > 0">
-          <h4>State</h4>
-          <ul>
-            <li>Active Player: {{ gameService.activePlayer.name }}</li>
-            <li>Turn: {{ gameService.turn }} </li>
-            <li>HasDeclaredBid: {{ gameService.hasDeclaredBid }} </li>
-          </ul>
-          <ul *ngIf="gameService.hasDeclaredBid">
-            <li>Trump: {{ gameService.bid.trump }}</li>
-            <li>Bid: {{ gameService.bid.bid }} </li>
-          </ul>
+        <!-- Log -->
+        <div class="col-md-4">
+          <div class="game-log">
+            <p *ngFor="let log of gameService.log">{{ log }}</p>
+          </div>
         </div>
         <!-- Player 1 -->
         <div class="col-md-4">
           <player [player]="gameService.players[0]"></player>
         </div>
-
         <!-- Graveyard -->
         <div class="col-md-4">
           <div class="player clearfix">
-            <h2>Graveyard</h2>
+            <h4>Graveyard</h4>
             <div class="hand row">
               <div *ngFor="let trick of gameService.grave">
                 <span class="info-icon"><i class="fas fa-info-circle" (click)="gameService.debug(trick)"></i></span>

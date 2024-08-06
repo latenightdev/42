@@ -14,4 +14,14 @@ export class Trick {
     this.count = 0;
     this.number = trickNumber;
   }
+
+  hasLeadDouble(lead: number): boolean {
+    for (let i = 0; i < this.set.length; i++) {
+      const domino = this.set[i];
+      if (domino.isDouble && domino.isLead(lead)) {
+        return true;
+      }
+    }
+    return false;
+  }  
 }
