@@ -10,6 +10,7 @@
 * AI deliberation flow (Condition => Instruction)
   - 1. Condition: player hand.length === 1 => Instruction: playDomino(player's.hand[0])
   - 2. Condition: player hand.length > 1
-      2a. Condition: player hand has matches to lead
-      2b. Condition: player hand does not have matches to lead
+      2a. Condition: player hand has matches to lead and can win -> play highest match
+      2b. Condition: player hand has matches to lead and cannot win -> play lowest match
+      2c. Condition: player hand does not have matches to lead -> play lowest domino
 

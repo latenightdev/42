@@ -3,25 +3,12 @@
   <div class="view-game">
     <div class="board turn-1">
 
-      <!-- Row 1 - Player 3, State Box  -->
+      <!-- Row 1 - Player 3 -->
       <div class="row board-row-1">
         <!-- Player 3 -->
         <div class="col-md-4 offset-md-4">
           <player [player]="gameService.players[2]"></player>
-        </div>
-        <!-- State Box -->
-        <div class="col-md-4" *ngIf="gameService.turn > 0">
-          <h4>State</h4>
-          <ul>
-            <li>Active Player: {{ gameService.activePlayer.name }}</li>
-            <li>Turn: {{ gameService.turn }} </li>
-            <li>HasDeclaredBid: {{ gameService.hasDeclaredBid }} </li>
-          </ul>
-          <ul *ngIf="gameService.hasDeclaredBid">
-            <li>Trump: {{ gameService.bid.trump }}</li>
-            <li>Bid: {{ gameService.bid.bid }} </li>
-          </ul>
-        </div>        
+        </div>      
       </div>
 
       <!-- Row 2 - Player 2, Board, Player 4 -->
@@ -34,6 +21,11 @@
         <div class="col-md-4">
           <div id="pit" class="player clearfix">
             <h4>Board<span class="info-icon"><i class="fas fa-info-circle" (click)="gameService.debug(gameService.board)"></i></span></h4>
+            <p>
+              <span *ngIf="gameService.turn > 0">Turn: {{ gameService.turn }}</span>
+              <span *ngIf="gameService.activePlayer">  |  Active Player: {{ gameService.activePlayer.name }}</span>
+              <span *ngIf="gameService.leadValue">  |  Lead: {{ gameService.leadValue }}</span>
+            </p>
             <div class="hand">
               <div *ngFor="let domino of gameService.board?.set">
                 <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>

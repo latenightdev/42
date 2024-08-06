@@ -32,6 +32,10 @@ export class PlayerComponent implements OnInit {
   }
 
   playDomino(): void {
-    this.gameService.leadWithDomino(this.player.selected[0]);
+    if (this.gameService.board.set.length === 0) {
+      this.gameService.leadWithDomino(this.player.selected[0]);
+    } else {
+      this.gameService.followWithDomino(this.player.selected[0]);
+    }
   }
 }

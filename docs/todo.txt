@@ -1,12 +1,9 @@
 TODO:
+- fix debug info icons on board, grave, anywhere else!
+- game over results instead of trick results (when any player's hand.length === 0)
+- graveyard to its own column and add stats next to each trick
+- the trick/board trick thing is confusing.  
 - domino.getValue/getName should depend on the LEAD value not necessarily the trump value
-- score should be determined before showing trick modal
-  - audit which things should happen before/after trick modal
-- cleanup state
-  - trump, bid amount to player's sub-heading
-  - active player, hasDeclaredBid not needed
-  - turn, trump, bid could also live in nav
-  - is turn necessary at all?  trick # / grave.length should be enough
 - clear log on new game
   - other stuff needs to be reset too - bid, grave on debug game, etc
 - bug: domino name incorrect (ex: 2-3 follows a 2-2 and is called 3-2 in log)
@@ -14,6 +11,11 @@ TODO:
 - flow: noCash argument to both lowest/highest method
 
 DONE:
+* AI follow with lowest trump when they cannot win trick otherwise highest!
+* audit which things should happen before/after trick modal
+* cleanup state
+  * trump, bid amount to player's sub-heading
+  * turn, leadValue, activePlayer to Board sub-heading
 * end trick pops a modal with trick results and click button to start next trick
 * setup navigation bar
 * deliberation timeout to variable
