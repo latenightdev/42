@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { GameService } from '../../services/game.service';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'trick',
@@ -9,7 +9,7 @@ import { GameService } from '../../services/game.service';
 export class TrickComponent {
   @Output() emitNextTrick: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public gameService: GameService) { }
+  constructor(public state: StateService) {}
 
   onClickNext(): void {
     this.emitNextTrick.emit();

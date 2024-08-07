@@ -1,5 +1,12 @@
 TODO:
 - game over results instead of trick results (when any player's hand.length === 0)
+- fun! refactor - repeated object references to single const in big methods (trump = this.gameService.state.bid.trump)
+- create toggle for show/hide players' dominoes
+  - dropdown menu??  could also have toggle for: show log, show debug icons, show grave trick details, etc
+- fun! refactor: DRY-out stuff like resetting for a new hand to utility methods
+- domino.selected color = blue?
+- grave: hand has width so detail position is normalized
+- log: scroll to bottom automatically?
 
 - flow (follow): partners should play count when they have no matches (before playing lowest)
 - flow: noCash argument to both lowest/highest method?
@@ -8,8 +15,14 @@ TODO:
 - domino.getValue/getName should depend on the LEAD value not necessarily the trump value
 - bug: domino name incorrect (ex: 2-3 follows a 2-2 and is called 3-2 in log)
 
+- EPIC: flow (lead): ability for player to analyze hand and declare bid/trump
+- EPIC: score: ALL or similar scoring tracked from game to game
+
+- consider: logging service
+
 
 DONE:
+* consider: state service where game/player services can share state better!  dumbass!
 * consider blank screen / background image before starting a game
 * prompt to enter Player 1 name (during bid for now)
 * refactor: move applicable methods from game.service to domino.service and player.service

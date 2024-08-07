@@ -1,22 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DominoDTO } from '../models/dominioDTO';
 import { Domino } from '../models/domino';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DominoService {
 
-  originalSet: Array<DominoDTO> = [];
-  set: Array<Domino> = [];
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private state: StateService) {}
 
   init(): void {
     this.loadDominoes().subscribe(response => {
-      this.originalSet = response.set;
+      this.state.originalSet = response.set;
     });
   }
 
@@ -27,11 +24,11 @@ export class DominoService {
 
   createDominoes(): void {
     const dominoes: Array<Domino> = [];
-    for(let i = 0; i < this.originalSet.length; i++) {
-      const domino: Domino = new Domino(this.originalSet[i]);
+    for(let i = 0; i < this.state.originalSet.length; i++) {
+      const domino: Domino = new Domino(this.state.originalSet[i]);
       dominoes.push(domino);
     }
-    this.set = dominoes;
+    this.state.set = dominoes;
   }
 
   findHighDomino(dominoes: Array<Domino>): Domino {

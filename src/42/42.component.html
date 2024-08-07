@@ -1,13 +1,13 @@
 <navigation (emitNewGame)="onEmitNew()" (emitDebugGame)="onEmitDebug()"></navigation>
 <div class="container">
   <div class="view-game">
-    <div *ngIf="gameService.state.turn >= 1 || gameService.state.isTestMode" class="board">
+    <div *ngIf="state.turn >= 1 || state.isTestMode" class="board">
 
       <!-- Row 1 - Player 3 -->
       <div class="row board-row-1">
         <!-- Player 3 -->
         <div class="col-md-4 offset-md-4">
-          <player [player]="playerService.players[2]"></player>
+          <player [player]="state.players[2]"></player>
         </div>      
       </div>
 
@@ -15,19 +15,19 @@
       <div class="row board-row-2">
         <!-- Player 2 -->
         <div class="col-md-4">
-          <player [player]="playerService.players[1]"></player>
+          <player [player]="state.players[1]"></player>
         </div>
         <!-- Board -->
         <div class="col-md-4">
           <div id="pit" class="player clearfix">
-            <h4>Board<span class="info-icon"><mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(gameService.state.board)"></mat-icon></span></h4>
+            <h4>Board<span class="info-icon"><mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(state.board)"></mat-icon></span></h4>
             <p>
-              <span *ngIf="gameService.state.turn > 0">Turn: {{ gameService.state.turn }}</span>
-              <span *ngIf="playerService.activePlayer">  |  Active Player: {{ playerService.activePlayer.name }}</span>
-              <span *ngIf="gameService.state.leadValue">  |  Lead: {{ gameService.state.leadValue }}</span>
+              <span *ngIf="state.turn > 0">Turn: {{ state.turn }}</span>
+              <span *ngIf="state.activePlayer">  |  Active Player: {{ state.activePlayer.name }}</span>
+              <span *ngIf="state.leadValue">  |  Lead: {{ state.leadValue }}</span>
             </p>
             <div class="hand">
-              <div *ngFor="let domino of gameService.state.board?.set">
+              <div *ngFor="let domino of state.board?.set">
                 <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>
               </div>
             </div>
@@ -35,7 +35,7 @@
         </div>
         <!-- Player 4 -->
         <div class="col-md-4">
-          <player [player]="playerService.players[3]" class="float-right"></player>
+          <player [player]="state.players[3]" class="float-right"></player>
         </div>
       </div>
 
@@ -44,24 +44,24 @@
         <!-- Log -->
         <div class="col-md-4">
           <div class="game-log">
-            <p *ngFor="let log of gameService.state.log">{{ log }}</p>
+            <p *ngFor="let log of state.log">{{ log }}</p>
           </div>
         </div>
         <!-- Player 1 -->
         <div class="col-md-4">
-          <player [player]="playerService.players[0]"></player>
+          <player [player]="state.players[0]"></player>
         </div>
         <!-- Graveyard -->
         <div class="col-md-4">
           <div class="player clearfix">
             <h4>Graveyard</h4>
             <div class="hand row">
-              <div *ngFor="let trick of gameService.state.grave">
-                <span *ngIf="!gameService.state.isTestMode" class="trick-details">
+              <div *ngFor="let trick of state.grave">
+                <span *ngIf="!state.isTestMode" class="trick-details">
                   <ul>
                     <li>Count: {{ trick.count }}</li>
-                    <li>Lead: {{ trick.leadDomino.getValue(gameService.state.bid.trump) }}</li>
-                    <li>Winning Domino: {{ trick.winningDomino.getValue(gameService.state.bid.trump) }}</li>
+                    <li>Lead: {{ trick.leadDomino.getValue(state.bid.trump) }}</li>
+                    <li>Winning Domino: {{ trick.winningDomino.getValue(state.bid.trump) }}</li>
                     <li>Winning Player: {{ trick.winningPlayer.name }}</li>
                   </ul>                  
                 </span>

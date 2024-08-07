@@ -3,6 +3,7 @@ import { Player } from '../../models/player';
 import { Domino } from '../../models/domino';
 import { GameService } from '../../services/game.service';
 import { PlayerService } from '../../services/player.service';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'player',
@@ -13,13 +14,17 @@ export class PlayerComponent implements OnInit {
 
   @Input() player!: Player;
 
-  constructor(public gameService: GameService, public playerService: PlayerService) { }
+  constructor(
+    public gameService: GameService,
+    private playerService: PlayerService,
+    public state: StateService
+  ) {}
 
   ngOnInit() {
   }
 
   clickDomino(domino: Domino): void {
-    if (this.player.number === 1 && this.player === this.playerService.activePlayer) {
+    if (this.player.number === 1 && this.player === this.state.activePlayer) {
       this.selectDomino(domino);
     }
   }
@@ -33,7 +38,7 @@ export class PlayerComponent implements OnInit {
   }
 
   playDomino(): void {
-    if (this.gameService.state.board.set.length === 0) {
+    if (this.state.board.set.length === 0) {
       this.playerService.leadWithDomino(this.player.selected[0]);
     } else {
       this.playerService.followWithDomino(this.player.selected[0]);

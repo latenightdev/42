@@ -4,6 +4,7 @@ import { Bid } from './models/bid';
 import { Domino } from './models/domino';
 import { PlayerService } from './services/player.service';
 import { DominoService } from './services/domino.service';
+import { StateService } from './services/state.service';
 
 @Component({
   selector: 'root-42',
@@ -12,7 +13,12 @@ import { DominoService } from './services/domino.service';
 })
 export class Component42 implements OnInit {
 
-  constructor(public gameService: GameService, public playerService: PlayerService, private dominoService: DominoService) { }
+  constructor(
+    public gameService: GameService,
+    private playerService: PlayerService,
+    private dominoService: DominoService,
+    public state: StateService
+  ) {}
 
   ngOnInit(): void {
     this.dominoService.init();
@@ -20,8 +26,8 @@ export class Component42 implements OnInit {
   }
 
   onDeclareBid(bid: Bid): void {
-    this.playerService.hasDeclaredBid = true;
-    this.gameService.state.bid = bid;
+    this.state.hasDeclaredBid = true;
+    this.state.bid = bid;
   }
 
   onEmitNew(): void {

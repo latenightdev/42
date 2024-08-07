@@ -1,23 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Player } from '../models/player';
-import { State } from '../models/state';
 import { Domino } from '../models/domino';
 import { DominoService } from './domino.service';
 import { Modal } from 'bootstrap';
 import { Trick } from '../models/trick';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  players: Array<Player> = [];
-  activePlayer!: Player;
-  hasDeclaredBid = false;
-  deliberationTimeout = 1000;
-  state: State = new State();
-
-  constructor(private dominoService: DominoService) { }
+  constructor(private dominoService: DominoService, private state: StateService) {}
 
   init(): void {
     this.createPlayers();
@@ -31,38 +25,38 @@ export class PlayerService {
   }  
 
   createPlayer(playerNumber: number, name: string): void {
-    const index = this.players.length ? this.players.length : 0;
+    const index = this.state.players.length ? this.state.players.length : 0;
     const player: Player = new Player(index, playerNumber, name);
-    this.players.push(player);
+    this.state.players.push(player);
   }
 
   // Player 1 leads the trick by selecting a domino - remove domino from hand, place on board, set as winning domino, and switch to AI
   leadWithDomino(domino: Domino): void {
-    this.players[0].removeDominoFromHand(domino);
+    this.state.players[0].removeDominoFromHand(domino);
     this.state.board.set.push(domino);
-    this.state.log.push(this.players[0].name + ' played a ' + domino.getValue(this.state.bid.trump));
+    this.state.log.push(this.state.players[0].name + ' played a ' + domino.getValue(this.state.bid.trump));
     this.state.leadValue = this.state.bid.trump === domino.secondary ? domino.secondary : domino.primary;
     this.state.board.leadDomino = domino;
     this.state.board.winningDomino = domino;
-    this.state.board.winningPlayer = this.players[0];
-    this.activePlayer = this.players[1];
+    this.state.board.winningPlayer = this.state.players[0];
+    this.state.activePlayer = this.state.players[1];
     this.state.turn++;
     this.followAI();
   }
 
   followAI(): void {
-    console.log(this.activePlayer.name + ' is deliberating...');
-    this.activePlayer.isDeliberating = true;
+    console.log(this.state.activePlayer.name + ' is deliberating...');
+    this.state.activePlayer.isDeliberating = true;
     setTimeout(() => {
       // Condition #1: Last domino
-      if (this.activePlayer.hand.length === 1) {
-        console.log(this.activePlayer.name + ' has only 1 domino remaining, playing...');
-        this.followWithDomino(this.activePlayer.hand[0]);
+      if (this.state.activePlayer.hand.length === 1) {
+        console.log(this.state.activePlayer.name + ' has only 1 domino remaining, playing...');
+        this.followWithDomino(this.state.activePlayer.hand[0]);
       } else {
         // Condition #2: Follow lead domino
         const matches: Array<Domino> = [];
-        for(let i = 0; i < this.activePlayer.hand.length; i++) {
-          const domino: Domino  = this.activePlayer.hand[i];
+        for(let i = 0; i < this.state.activePlayer.hand.length; i++) {
+          const domino: Domino  = this.state.activePlayer.hand[i];
           if (domino.primary === this.state.leadValue || domino.secondary === this.state.leadValue) {
             matches.push(domino);
           }
@@ -91,25 +85,25 @@ export class PlayerService {
         } else {
           // Condition #2c: Follow with lowest domino
           console.log('0 matches found to follow lead value of: ' + this.state.leadValue);
-          const lowDomino: Domino = this.dominoService.findLowDomino(this.activePlayer.hand);
+          const lowDomino: Domino = this.dominoService.findLowDomino(this.state.activePlayer.hand);
           console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.state.bid.trump));
           this.followWithDomino(lowDomino);
         }
       }
-    }, this.deliberationTimeout);
+    }, this.state.deliberationTimeout);
   }
 
   leadAI(): void {
-    console.log(this.activePlayer.name + ' is deliberating...');
-    this.activePlayer.isDeliberating = true;
+    console.log(this.state.activePlayer.name + ' is deliberating...');
+    this.state.activePlayer.isDeliberating = true;
     setTimeout(() => {
       // Condition #1: Last domino
-      if (this.activePlayer.hand.length === 1) {
-        console.log(this.activePlayer.name + ' has only 1 domino remaining, playing...');
-        this.leadWithDominoAI(this.activePlayer.hand[0]);
+      if (this.state.activePlayer.hand.length === 1) {
+        console.log(this.state.activePlayer.name + ' has only 1 domino remaining, playing...');
+        this.leadWithDominoAI(this.state.activePlayer.hand[0]);
       } else {
         // Condition #3?: AI would play highest trump or highest double or highest domino
-        const trumps: Domino[] = this.dominoService.findTrumps(this.activePlayer.hand, this.state.bid.trump);
+        const trumps: Domino[] = this.dominoService.findTrumps(this.state.activePlayer.hand, this.state.bid.trump);
         if (trumps.length) {
           // play highest trump
           if (trumps.length > 1) {
@@ -121,7 +115,7 @@ export class PlayerService {
             this.leadWithDominoAI(trumps[0]);
           }
         } else {
-          const doubles: Domino[] = this.dominoService.findDoubles(this.activePlayer.hand);
+          const doubles: Domino[] = this.dominoService.findDoubles(this.state.activePlayer.hand);
           if (doubles.length) {
             // play highest double
             if (doubles.length > 1) {
@@ -134,43 +128,43 @@ export class PlayerService {
             }
           } else {
             // play highest domino
-            const highDomino: Domino = this.dominoService.findHighDomino(this.activePlayer.hand);
+            const highDomino: Domino = this.dominoService.findHighDomino(this.state.activePlayer.hand);
             console.log('Leading with highest domino in hand: ' + highDomino.getValue(this.state.bid.trump));
             this.leadWithDominoAI(highDomino);
           }   
         }
       }
-    }, this.deliberationTimeout);
+    }, this.state.deliberationTimeout);
   }
 
   leadWithDominoAI(domino: Domino): void {
-    this.activePlayer.removeDominoFromHand(domino);
+    this.state.activePlayer.removeDominoFromHand(domino);
     this.state.board.set.push(domino);
-    this.state.log.push(this.activePlayer.name + ' played a ' + domino.getValue(this.state.bid.trump));
-    this.activePlayer.isDeliberating = false;
+    this.state.log.push(this.state.activePlayer.name + ' played a ' + domino.getValue(this.state.bid.trump));
+    this.state.activePlayer.isDeliberating = false;
     this.state.leadValue = this.state.bid.trump === domino.secondary ? domino.secondary : domino.primary;
     this.state.board.leadDomino = domino;
     this.state.board.winningDomino = domino;
-    this.state.board.winningPlayer = this.activePlayer;    
-    this.activePlayer = this.activePlayer.index === 3 ? this.players[0] : this.players[this.activePlayer.index + 1];
+    this.state.board.winningPlayer = this.state.activePlayer;    
+    this.state.activePlayer = this.state.activePlayer.index === 3 ? this.state.players[0] : this.state.players[this.state.activePlayer.index + 1];
     this.state.turn++;
-    if (this.activePlayer.index !== 0) {
+    if (this.state.activePlayer.index !== 0) {
       this.followAI();
     }
   }  
 
   followWithDomino(domino: Domino): void {
-    this.activePlayer.removeDominoFromHand(domino);
+    this.state.activePlayer.removeDominoFromHand(domino);
     const winningDomino: Domino = this.state.board.winningDomino;
     if (!winningDomino.isDouble) {
       if (domino.isLead(this.state.leadValue) && (domino.isDouble || (domino.total > winningDomino.total))) {
         this.state.board.winningDomino = domino;
-        this.state.board.winningPlayer = this.activePlayer;
+        this.state.board.winningPlayer = this.state.activePlayer;
       }
     }    
     this.state.board.set.push(domino);
-    this.state.log.push(this.activePlayer.name + ' played a ' + domino.getValue(this.state.bid.trump));
-    this.activePlayer.isDeliberating = false;
+    this.state.log.push(this.state.activePlayer.name + ' played a ' + domino.getValue(this.state.bid.trump));
+    this.state.activePlayer.isDeliberating = false;
     // end of trick
     if (this.state.board.set.length === 4) {
       // set score on trick and player, then show trick results modal
@@ -188,28 +182,28 @@ export class PlayerService {
       const trickModal = new Modal(trickElement);
       trickModal.show();
     } else {
-      this.activePlayer = this.activePlayer.index === 3 ? this.players[0] : this.players[this.activePlayer.index + 1];
+      this.state.activePlayer = this.state.activePlayer.index === 3 ? this.state.players[0] : this.state.players[this.state.activePlayer.index + 1];
       this.state.turn++;
-      if (this.activePlayer.index !== 0) {
+      if (this.state.activePlayer.index !== 0) {
         this.followAI();
       }
     }
   }
 
   endTrick(): void {
-    this.activePlayer = this.state.board.winningPlayer;
+    this.state.activePlayer = this.state.board.winningPlayer;
     this.state.grave.push(this.state.board);
     this.state.trick++;
     this.state.board = new Trick(this.state.trick);
-    if (this.activePlayer.index !== 0) {
+    if (this.state.activePlayer.index !== 0) {
       this.leadAI();
     }
   }  
 
   clearAllHands(): void {
-    this.players[0].clearHand();
-    this.players[1].clearHand();
-    this.players[2].clearHand();
-    this.players[3].clearHand();
+    this.state.players[0].clearHand();
+    this.state.players[1].clearHand();
+    this.state.players[2].clearHand();
+    this.state.players[3].clearHand();
   }  
 }
