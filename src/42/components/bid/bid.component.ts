@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Bid } from '../../models/bid';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'bid',
@@ -10,6 +11,8 @@ export class BidComponent {
 
   public bid!: Bid;
   @Output() emitBid: EventEmitter<Bid> = new EventEmitter<Bid>();
+
+  constructor(public playerService: PlayerService) { }
 
   ngOnInit() {
     this.bid = new Bid();

@@ -8,16 +8,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="hand">
-              <div *ngFor="let domino of gameService.board?.set">
+              <div *ngFor="let domino of gameService.state.board?.set">
                 <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>
               </div>
             </div>            
-            <ul *ngIf="gameService.board?.leadDomino">
-              <li>Trick #: {{ gameService.board.number }}</li>
-              <li>Count: {{ gameService.board.count }}</li>
-              <li>Lead: {{ gameService.board.leadDomino.getValue(gameService.bid.trump) }}</li>
-              <li>Winning Domino: {{ gameService.board.winningDomino.getValue(gameService.bid.trump) }}</li>
-              <li>Winning Player: {{ gameService.board.winningPlayer.name }}</li>
+            <ul *ngIf="gameService.state.board?.leadDomino">
+              <li>Trick #: {{ gameService.state.board.number }}</li>
+              <li>Count: {{ gameService.state.board.count }}</li>
+              <li>Lead: {{ gameService.state.board.leadDomino.getValue(gameService.state.bid.trump) }}</li>
+              <li>Winning Domino: {{ gameService.state.board.winningDomino.getValue(gameService.state.bid.trump) }}</li>
+              <li>Winning Player: {{ gameService.state.board.winningPlayer.name }}</li>
             </ul>
           </div>
         </div>

@@ -1,16 +1,22 @@
 TODO:
-- fix debug info icons on board, grave, anywhere else!
 - game over results instead of trick results (when any player's hand.length === 0)
-- graveyard to its own column and add stats next to each trick
-- the trick/board trick thing is confusing.  
+
+- flow (follow): partners should play count when they have no matches (before playing lowest)
+- flow: noCash argument to both lowest/highest method?
+
+- these 2 below may be related!
 - domino.getValue/getName should depend on the LEAD value not necessarily the trump value
-- clear log on new game
-  - other stuff needs to be reset too - bid, grave on debug game, etc
 - bug: domino name incorrect (ex: 2-3 follows a 2-2 and is called 3-2 in log)
-- prompt to enter Player 1 name (during bid for now)
-- flow: noCash argument to both lowest/highest method
+
 
 DONE:
+* consider blank screen / background image before starting a game
+* prompt to enter Player 1 name (during bid for now)
+* refactor: move applicable methods from game.service to domino.service and player.service
+* graveyard - add stats next to each trick
+* fix debug info icons on board, grave, anywhere else!
+* clear log on new game
+  * other stuff needs to be reset too - bid, grave on debug game, etc
 * AI follow with lowest trump when they cannot win trick otherwise highest!
 * audit which things should happen before/after trick modal
 * cleanup state
