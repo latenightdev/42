@@ -1,18 +1,20 @@
 <div class="domino domino-v" [ngClass]="{'domino-selected': selected}">
-  <div class="side side-{{primary}} side-primary clearfix">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-  <div class="side side-{{secondary}} side-secondary clearfix">
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
+  <ng-container *ngIf="showFace">
+    <div class="side side-{{primary}} side-primary clearfix">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <div class="side side-{{secondary}} side-secondary clearfix">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </ng-container>
 </div>

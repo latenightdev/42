@@ -62,6 +62,7 @@ export class PlayerService {
           }
         }
         if (matches.length) {
+          // found matches to lead
           console.log(matches.length + ' matches found to follow lead value of: ' + this.state.leadValue);
           // if only 1 match
           if (matches.length === 1) {
@@ -83,11 +84,32 @@ export class PlayerService {
             }            
           }
         } else {
-          // Condition #2c: Follow with lowest domino
+          // 0 matches to lead
           console.log('0 matches found to follow lead value of: ' + this.state.leadValue);
-          const lowDomino: Domino = this.dominoService.findLowDomino(this.state.activePlayer.hand);
-          console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.state.bid.trump));
-          this.followWithDomino(lowDomino);
+          const partnerPlayer: Player = this.findPartner(this.state.activePlayer);
+          if (this.state.board.winningPlayer === partnerPlayer) {
+            // Condition #2d: Follow with highest count to help partner
+            const counts: Domino[] = this.dominoService.findCounts(this.state.activePlayer.hand);
+            if (counts.length) {
+              if (counts.length > 1) {
+                const highCount: Domino = this.dominoService.findHighDomino(counts);
+                console.log('Following with highest count in hand: ' + highCount.getValue(this.state.bid.trump));
+                this.followWithDomino(highCount);
+              } else {
+                console.log('Following with only count in hand: ' + counts[0].getValue(this.state.bid.trump));
+                this.followWithDomino(counts[0]);
+              }   
+            } else {
+              const lowDomino: Domino = this.dominoService.findLowDomino(this.state.activePlayer.hand);
+              console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.state.bid.trump));
+              this.followWithDomino(lowDomino);              
+            }
+          } else {
+            // Condition #2c: Follow with lowest domino
+            const lowDomino: Domino = this.dominoService.findLowDomino(this.state.activePlayer.hand);
+            console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.state.bid.trump));
+            this.followWithDomino(lowDomino);
+          }
         }
       }
     }, this.state.deliberationTimeout);
@@ -119,7 +141,7 @@ export class PlayerService {
           if (doubles.length) {
             // play highest double
             if (doubles.length > 1) {
-              const highDouble: Domino = this.dominoService.findHighDomino(doubles);
+              const highDouble: Domino = this.dominoService.findHighDouble(doubles);
               console.log('Leading with highest double in hand: ' + highDouble.getValue(this.state.bid.trump));
               this.leadWithDominoAI(highDouble);
             } else {
@@ -197,6 +219,16 @@ export class PlayerService {
     this.state.board = new Trick(this.state.trick);
     if (this.state.activePlayer.index !== 0) {
       this.leadAI();
+    }
+  }
+
+  findPartner(activePlayer: Player): Player {
+    if (activePlayer.index === 1) {
+      return this.state.players[3];
+    } else if (activePlayer.index === 2) {
+      return this.state.players[0];
+    } else {
+      return this.state.players[1];
     }
   }  
 

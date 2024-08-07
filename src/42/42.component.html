@@ -20,7 +20,7 @@
         <!-- Board -->
         <div class="col-md-4">
           <div id="pit" class="player clearfix">
-            <h4>Board<span class="info-icon"><mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(state.board)"></mat-icon></span></h4>
+            <h4>Board<span *ngIf="state.showDebugIcons" class="info-icon"><mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(state.board)"></mat-icon></span></h4>
             <p>
               <span *ngIf="state.turn > 0">Turn: {{ state.turn }}</span>
               <span *ngIf="state.activePlayer">  |  Active Player: {{ state.activePlayer.name }}</span>
@@ -43,7 +43,7 @@
       <div class="row board-row-3">
         <!-- Log -->
         <div class="col-md-4">
-          <div class="game-log">
+          <div *ngIf="state.showLog" class="game-log">
             <p *ngFor="let log of state.log">{{ log }}</p>
           </div>
         </div>
@@ -54,10 +54,10 @@
         <!-- Graveyard -->
         <div class="col-md-4">
           <div class="player clearfix">
-            <h4>Graveyard</h4>
+            <h4>Graveyard<span *ngIf="state.showDebugIcons" class="info-icon"><mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(state.grave)"></mat-icon></span></h4>
             <div class="hand row">
               <div *ngFor="let trick of state.grave">
-                <span *ngIf="!state.isTestMode" class="trick-details">
+                <span *ngIf="state.showTrickDetails && !state.isTestMode" class="trick-details">
                   <ul>
                     <li>Count: {{ trick.count }}</li>
                     <li>Lead: {{ trick.leadDomino.getValue(state.bid.trump) }}</li>

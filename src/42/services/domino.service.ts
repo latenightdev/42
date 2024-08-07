@@ -46,6 +46,17 @@ export class DominoService {
     return high;
   }
 
+  findHighDouble(dominoes: Array<Domino>): Domino {
+    let high: Domino = dominoes[0];
+    for(let i = 0; i < dominoes.length; i++) {
+      const domino = dominoes[i];
+      if (domino.total > high.total) {
+        high = domino;
+      }
+    }
+    return high;
+  }  
+
   findLowDomino(dominoes: Array<Domino>): Domino {
     let low: Domino = dominoes[0];
     for(let i = 1; i < dominoes.length; i++) {
@@ -77,5 +88,16 @@ export class DominoService {
       }
     }
     return doubles;
-  }  
+  }
+
+  findCounts(dominoes: Array<Domino>): Array<Domino> {
+    let counts = [];
+    for(let i = 0; i < dominoes.length; i++) {
+      const domino = dominoes[i];
+      if (domino.isCount) {
+        counts.push(domino);
+      }
+    }
+    return counts;
+  }    
 }

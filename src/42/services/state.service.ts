@@ -16,11 +16,15 @@ export class StateService {
   grave: Array<Trick> = [];
   hasDeclaredBid = false;
   isTestMode = false;
-  leadValue!: number;
+  leadValue = 0;
   log: Array<string> = [];
   originalSet: Array<DominoDTO> = [];
   players: Array<Player> = [];
   set: Array<Domino> = [];
+  showDebugIcons = false;
+  showDebugDominoes = true;
+  showLog = true;
+  showTrickDetails = true;
   turn = 0;
   trick = 0;
 }

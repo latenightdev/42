@@ -1,7 +1,7 @@
 <div class="player player-{{player.number}}">
   <h2>{{ player.name }}
     <span class="turn" *ngIf="state.activePlayer === player"> * </span>
-    <mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(player)"></mat-icon>
+    <mat-icon *ngIf="state.showDebugIcons" class="info-icon" fontIcon="info" (click)="gameService.debug(player)"></mat-icon>
     <span class="loading-icon" *ngIf="player.isDeliberating || (player.index === 0 && state.activePlayer?.index === 0)"><img src="/assets/loading.gif" /></span>
   </h2>
   <p>
@@ -13,7 +13,7 @@
   </p>
   <div class="hand">
     <div *ngFor="let domino of player.hand">
-      <domino [primary]="domino.primary" [secondary]="domino.secondary" [selected]="isDominoSelected(domino)" (click)="clickDomino(domino)"></domino>
+      <domino [primary]="domino.primary" [secondary]="domino.secondary" [selected]="isDominoSelected(domino)" [showFace]="showDomino()" (click)="clickDomino(domino)"></domino>
     </div>
   </div>
   <div class="toolbar" *ngIf="player.number === 1 && state.turn > 0">

@@ -1,15 +1,17 @@
 TODO:
+- board and grave to components
 - game over results instead of trick results (when any player's hand.length === 0)
-- fun! refactor - repeated object references to single const in big methods (trump = this.gameService.state.bid.trump)
-- create toggle for show/hide players' dominoes
-  - dropdown menu??  could also have toggle for: show log, show debug icons, show grave trick details, etc
-- fun! refactor: DRY-out stuff like resetting for a new hand to utility methods
+
 - domino.selected color = blue?
 - grave: hand has width so detail position is normalized
 - log: scroll to bottom automatically?
+- loading: change color to blue?
 
-- flow (follow): partners should play count when they have no matches (before playing lowest)
-- flow: noCash argument to both lowest/highest method?
+- flow: followAI: if not my partner don't play cash
+  - simple.  add a removeCounts that takes an array and returns array WITHOUT counts.
+  - can do an extra check after creating new array and if it ended up empty go back!
+
+- favicon
 
 - these 2 below may be related!
 - domino.getValue/getName should depend on the LEAD value not necessarily the trump value
@@ -22,6 +24,9 @@ TODO:
 
 
 DONE:
+* dropdown menu toggle for: show log, show debug icons, show dominoes, show grave trick details, etc
+* flow (follow): partners should play count when they have no matches (before playing lowest)
+* fun! refactor: DRY-out stuff like resetting for a new hand to utility methods
 * consider: state service where game/player services can share state better!  dumbass!
 * consider blank screen / background image before starting a game
 * prompt to enter Player 1 name (during bid for now)

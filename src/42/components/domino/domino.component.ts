@@ -9,4 +9,5 @@ export class DominoComponent {
   @Input() primary!: number;
   @Input() secondary!: number;
   @Input() selected!: boolean;
+  @Input() showFace?: boolean = true;
 }

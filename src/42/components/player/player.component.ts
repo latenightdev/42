@@ -44,4 +44,8 @@ export class PlayerComponent implements OnInit {
       this.playerService.followWithDomino(this.player.selected[0]);
     }
   }
+
+  showDomino(): boolean {
+    return this.player.index === 0 || this.state.showDebugDominoes;
+  }
 }

@@ -13,7 +13,34 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="onClickDebug()">Debug Game</a>
-      </li>         
-    </ul>    
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Settings
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+          <li>
+            <a class="dropdown-item" (click)="onClickToggleDebugIcons()">
+              <span *ngIf="state.showDebugIcons">Hide</span>
+              <span *ngIf="!state.showDebugIcons">Show</span> debug icons</a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="onClickToggleDebugDominoes()">
+              <span *ngIf="state.showDebugDominoes">Hide</span>
+              <span *ngIf="!state.showDebugDominoes">Show</span> debug dominoes</a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="onClickToggleLog()">
+              <span *ngIf="state.showLog">Hide</span>
+              <span *ngIf="!state.showLog">Show</span> log</a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="onClickToggleTrickDetails()">
+              <span *ngIf="state.showTrickDetails">Hide</span>
+              <span *ngIf="!state.showTrickDetails">Show</span> trick details</a>
+          </li>
+        </ul>
+      </li>  
+    </ul>  
   </div>
 </nav>
