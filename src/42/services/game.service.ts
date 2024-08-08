@@ -4,6 +4,7 @@ import { Trick } from '../models/trick';
 import { DominoService } from './domino.service';
 import { PlayerService } from './player.service';
 import { StateService } from './state.service';
+import { Bid } from '../models/bid';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,35 @@ export class GameService {
     this.state.turn++;
     if (this.state.activePlayer.index !== 0) {
       this.playerService.selectDominoToFollow().then(domino => this.followWithDomino(domino));
+    }
+  }
+
+  followWithBid(bid: Bid): void {
+    this.state.activePlayer.bid = bid;
+    this.state.log.push(this.state.activePlayer.name + ' bid on trump: ' + bid.trump + ' bid: ' + bid.bid);
+    if(bid.bid > this.state.bid.bid) {
+      this.state.bid = bid;
+    }
+    if (this.state.activePlayer.index !== 3) {
+      this.state.activePlayer = this.state.activePlayer.index === 3 ? this.state.players[0] : this.state.players[this.state.activePlayer.index + 1];
+      if (this.state.activePlayer.index !== 0) {
+        this.playerService.selectBidToFollow().then(bid => this.followWithBid(bid));
+      }      
+    } else {
+      this.state.log.push(this.state.bid.player.name + ' won the bid with trump: ' + this.state.bid.trump + ' bid: ' + this.state.bid.bid);
+      this.state.activePlayer = this.state.bid.player;
+      if (this.state.activePlayer.index !== 0) {
+        this.playerService.selectDominoToLead().then(domino => this.leadWithDomino(domino));
+      }
+    }
+  }
+
+  leadWithBid(bid: Bid): void {
+    this.state.activePlayer.bid = bid;
+    this.state.log.push(this.state.activePlayer.name + ' bid on trump: ' + bid.trump + ' bid: ' + bid.bid);
+    this.state.activePlayer = this.state.activePlayer.index === 3 ? this.state.players[0] : this.state.players[this.state.activePlayer.index + 1];
+    if (this.state.activePlayer.index !== 0) {
+      this.playerService.selectBidToFollow().then(bid => this.followWithBid(bid));
     }
   }
 

@@ -9,7 +9,7 @@ import { StateService } from '../../services/state.service';
   templateUrl: './player.component.html',
   styleUrl: './player.component.less'
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent {
 
   @Input() player!: Player;
 
@@ -17,9 +17,6 @@ export class PlayerComponent implements OnInit {
     public gameService: GameService,
     public state: StateService
   ) {}
-
-  ngOnInit() {
-  }
 
   clickDomino(domino: Domino): void {
     if (this.player.number === 1 && this.player === this.state.activePlayer) {

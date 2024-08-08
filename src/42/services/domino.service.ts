@@ -99,5 +99,16 @@ export class DominoService {
       }
     }
     return counts;
-  }    
+  }
+
+  findMatches(dominoes: Array<Domino>, value: number): Array<Domino> {
+    let matches = [];
+    for(let i = 0; i < dominoes.length; i++) {
+      const domino: Domino  = dominoes[i];
+      if (domino.primary === value || domino.secondary === value) {
+        matches.push(domino);
+      }
+    }
+    return matches;
+  }
 }

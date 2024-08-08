@@ -18,39 +18,10 @@ TODO:
 - domino.getValue/getName should depend on the LEAD value not necessarily the trump value
 - bug: domino name incorrect (ex: 2-3 follows a 2-2 and is called 3-2 in log)
 
-- EPIC: flow (lead): ability for player to analyze hand and declare bid/trump
 - EPIC: score: ALL or similar scoring tracked from game to game
 
 - consider: logging service
 
 
 DONE:
-* bug: createPopper drop down menu
-* end of trick: maybe just a Next button instead of modal.
-* dropdown menu toggle for: show log, show debug icons, show dominoes, show grave trick details, etc
-* flow (follow): partners should play count when they have no matches (before playing lowest)
-* fun! refactor: DRY-out stuff like resetting for a new hand to utility methods
-* consider: state service where game/player services can share state better!  dumbass!
-* consider blank screen / background image before starting a game
-* prompt to enter Player 1 name (during bid for now)
-* refactor: move applicable methods from game.service to domino.service and player.service
-* graveyard - add stats next to each trick
-* fix debug info icons on board, grave, anywhere else!
-* clear log on new game
-  * other stuff needs to be reset too - bid, grave on debug game, etc
-* AI follow with lowest trump when they cannot win trick otherwise highest!
-* audit which things should happen before/after trick modal
-* cleanup state
-  * trump, bid amount to player's sub-heading
-  * turn, leadValue, activePlayer to Board sub-heading
-* end trick pops a modal with trick results and click button to start next trick
-* setup navigation bar
-* deliberation timeout to variable
-* log should be set height and scroll
-* add text activity log that shows every move
-* add score total next to each player
-* fix player button designn
-* fix bid modal design
-* EPIC: test bed needed (wow you pretty clever)
-* bug: when AI plays higher than lead domino and lead is double
-* flow: when no matches to lead - play lowest domino
+* EPIC: flow (lead): ability for player to analyze hand and declare bid/trump

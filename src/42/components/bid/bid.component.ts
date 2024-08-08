@@ -21,6 +21,7 @@ export class BidComponent {
   declareBid(): void {
     this.bid.trump = Number(this.bid.trump);
     this.bid.bid = Number(this.bid.bid);
+    this.bid.player = this.state.players[0];
     this.emitBid.emit(this.bid);
   }
 }

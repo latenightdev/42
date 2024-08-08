@@ -1,4 +1,4 @@
-import { DominoDTO } from "./dominioDTO";
+import { DominoDTO } from "./dominoDTO";
 
 export class Domino {
   id: number;

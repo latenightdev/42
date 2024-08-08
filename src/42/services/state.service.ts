@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Trick } from '../models/trick';
 import { Bid } from '../models/bid';
 import { Player } from '../models/player';
-import { DominoDTO } from '../models/dominioDTO';
+import { DominoDTO } from '../models/dominoDTO';
 import { Domino } from '../models/domino';
 
 @Injectable({

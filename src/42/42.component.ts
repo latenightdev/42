@@ -28,6 +28,7 @@ export class Component42 implements OnInit {
   onDeclareBid(bid: Bid): void {
     this.state.hasDeclaredBid = true;
     this.state.bid = bid;
+    this.gameService.leadWithBid(bid);
   }
 
   onEmitNew(): void {

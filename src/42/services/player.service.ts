@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Player } from '../models/player';
 import { Domino } from '../models/domino';
 import { DominoService } from './domino.service';
-import { Trick } from '../models/trick';
 import { StateService } from './state.service';
+import { Bid } from '../models/bid';
 
 @Injectable({
   providedIn: 'root'
@@ -135,6 +135,49 @@ export class PlayerService {
         this.state.activePlayer.isDeliberating = false;
       }, this.state.deliberationTimeout);
     });
+  }
+
+  selectBidToFollow(): Promise<Bid> {
+    console.log(this.state.activePlayer.name + ' is deliberating...');
+    this.state.activePlayer.isDeliberating = true;
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const doubles: Domino[] = this.dominoService.findDoubles(this.state.activePlayer.hand);
+        let bid: Bid = {bid: 0, trump: 0, player: this.state.activePlayer};
+        if (doubles.length) {
+          //let bid: Bid = {bid: 0, trump: doubles[0].primary};
+          for(let i = 0; i < doubles.length; i++) {
+            const double: Domino  = doubles[i];
+            const numMatches = this.dominoService.findMatches(this.state.activePlayer.hand, double.primary).length;
+            if (numMatches > bid.bid) {
+              bid.bid = numMatches;
+              bid.trump = double.primary;
+            }
+          }
+          console.log(bid);
+          // TODO: simplified bidding for now
+          if (bid.bid === 4) {
+            bid.bid = 30;
+            resolve(bid);
+          } else if (bid.bid === 5) {
+            bid.bid = 31;
+            resolve(bid);
+          } else if (bid.bid === 6) {
+            bid.bid = 32;
+            resolve(bid);
+          } else if (bid.bid === 7) {
+            bid.bid = 42;
+            resolve(bid);
+          } else {
+            bid.bid = 0;
+            resolve(bid);  
+          }
+        } else {
+          resolve(bid);
+        }
+        this.state.activePlayer.isDeliberating = false;
+      }, this.state.deliberationTimeout);
+    });    
   }
 
   findPartner(activePlayer: Player): Player {

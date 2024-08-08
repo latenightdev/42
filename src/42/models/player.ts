@@ -1,3 +1,4 @@
+import { Bid } from "./bid";
 import { Domino } from "./domino";
 
 export class Player {
@@ -8,6 +9,7 @@ export class Player {
   hand: Array<Domino>;
   selected: Array<Domino>;
   isDeliberating: boolean;
+  bid?: Bid
 
   constructor(index: number, playerNumber: number, name: string) {
     this.index = index;
