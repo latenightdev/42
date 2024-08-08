@@ -3,13 +3,14 @@ TODO:
 - game over results instead of trick results (when any player's hand.length === 0)
 
 - domino.selected color = blue?
-- grave: hand has width so detail position is normalized
 - log: scroll to bottom automatically?
 - loading: change color to blue?
+- random: investigate random deal method make better
 
 - flow: followAI: if not my partner don't play cash
   - simple.  add a removeCounts that takes an array and returns array WITHOUT counts.
   - can do an extra check after creating new array and if it ended up empty go back!
+- flow: when lead is not a trump and no matches to lead - AI can trump to take trick
 
 - favicon
 
@@ -24,6 +25,8 @@ TODO:
 
 
 DONE:
+* bug: createPopper drop down menu
+* end of trick: maybe just a Next button instead of modal.
 * dropdown menu toggle for: show log, show debug icons, show dominoes, show grave trick details, etc
 * flow (follow): partners should play count when they have no matches (before playing lowest)
 * fun! refactor: DRY-out stuff like resetting for a new hand to utility methods

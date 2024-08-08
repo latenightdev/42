@@ -39,13 +39,12 @@
               }
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-toastr/toastr.css",              
               "src/styles.less"
             ],
-            "scripts": [      
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {

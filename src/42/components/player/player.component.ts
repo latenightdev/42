@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Player } from '../../models/player';
 import { Domino } from '../../models/domino';
 import { GameService } from '../../services/game.service';
-import { PlayerService } from '../../services/player.service';
 import { StateService } from '../../services/state.service';
 
 @Component({
@@ -16,7 +15,6 @@ export class PlayerComponent implements OnInit {
 
   constructor(
     public gameService: GameService,
-    private playerService: PlayerService,
     public state: StateService
   ) {}
 
@@ -39,9 +37,9 @@ export class PlayerComponent implements OnInit {
 
   playDomino(): void {
     if (this.state.board.set.length === 0) {
-      this.playerService.leadWithDomino(this.player.selected[0]);
+      this.gameService.leadWithDomino(this.player.selected[0]);
     } else {
-      this.playerService.followWithDomino(this.player.selected[0]);
+      this.gameService.followWithDomino(this.player.selected[0]);
     }
   }
 

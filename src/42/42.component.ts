@@ -38,8 +38,8 @@ export class Component42 implements OnInit {
     this.gameService.dealTestHand();
   }
 
-  onEmitNext(): void {
-    this.playerService.endTrick();
+  onClickNext(): void {
+    this.gameService.nextTrick();
   }
 
   onClickGrave(domino: Domino): void {

@@ -24,13 +24,22 @@
             <p>
               <span *ngIf="state.turn > 0">Turn: {{ state.turn }}</span>
               <span *ngIf="state.activePlayer">  |  Active Player: {{ state.activePlayer.name }}</span>
-              <span *ngIf="state.leadValue">  |  Lead: {{ state.leadValue }}</span>
+              <span *ngIf="state.leadValue">  |  Lead Value: {{ state.leadValue }}</span>
             </p>
             <div class="hand">
+              <span *ngIf="state.showTrickDetails && state.board.set.length === 4" class="trick-details">
+                <ul>
+                  <li>Count: {{ state.board.count }}</li>
+                  <li>Lead: {{ state.board.leadDomino.getValue(state.bid.trump) }}</li>
+                  <li>Winning Domino: {{ state.board.winningDomino.getValue(state.bid.trump) }}</li>
+                  <li>Winning Player: {{ state.board.winningPlayer.name }}</li>
+                </ul>                  
+              </span>              
               <div *ngFor="let domino of state.board?.set">
                 <domino [primary]="domino.primary" [secondary]="domino.secondary"></domino>
               </div>
             </div>
+            <button *ngIf="state.board.set.length === 4" (click)="onClickNext()" type="button" class="btn btn-outline-primary">Next Trick</button>
           </div>
         </div>
         <!-- Player 4 -->
@@ -79,4 +88,3 @@
   </div>
 </div>
 <bid (emitBid)="onDeclareBid($event)"></bid>
-<trick (emitNextTrick)="onEmitNext()"></trick>
