@@ -6,7 +6,7 @@
   </h2>
   <p>
     <span>Score: {{ player.score }}</span>
-    <ng-container *ngIf="state.hasDeclaredBid && player.number === 1">
+    <ng-container *ngIf="state.hasDeclaredBid && state.bid.player === player">
       <span> | Bid: {{ state.bid.bid }} | </span>
       <span>Trump: {{ state.bid.trump }}</span>
     </ng-container>
