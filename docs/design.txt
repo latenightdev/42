@@ -1,4 +1,4 @@
-* Service strategy
+Service strategy
   - domino.service
     - fetch json/build deck
     - any domino-specific methods
@@ -7,10 +7,28 @@
   - player.service
     - all player-specific commands
 
-* AI deliberation flow (Condition => Instruction)
-  - 1. Condition: player hand.length === 1 => Instruction: playDomino(player's.hand[0])
-  - 2. Condition: player hand.length > 1
-      2a. Condition: player hand has matches to lead and can win -> play highest match
-      2b. Condition: player hand has matches to lead and cannot win -> play lowest match
-      2c. Condition: player hand does not have matches to lead -> play lowest domino
+AI deliberation flow (** needs implementation)
 
+Follow Flow:
+  F1. Last domino
+  F2. Follow lead domino
+    F2a. Follow with only match
+    F2b. Follow with highest match
+    F2c. Follow with lowest match
+  F3. No matches to follow lead domino AND partner is winning the trick
+    F3a. Follow with only count
+    F3b. Follow with highest count
+    F3c. Follow with lowest domino
+  F4. No matches to follow lead domino AND other team is winning the trick
+    **F4a. Follow with lowest trump
+    F4b. Follow with lowest domino (**no count)
+
+Lead Flow:
+  L1. Last domino
+  L2. Lead with trump
+    L2a. Lead with only trump
+    L2b. Lead with highest trump
+  L3. Lead with double
+    L3a. Lead with only double
+    L3b. Lead with highest double
+  L4. Lead with highest domino

@@ -15,7 +15,7 @@ export class Component42 implements OnInit {
 
   constructor(
     public gameService: GameService,
-    private playerService: PlayerService,
+    public playerService: PlayerService,
     private dominoService: DominoService,
     public state: StateService
   ) {}
@@ -40,7 +40,7 @@ export class Component42 implements OnInit {
   }
 
   onClickNext(): void {
-    this.gameService.nextTrick();
+    this.state.turn === 28 ? this.state.turn = 99 : this.gameService.nextTrick();
   }
 
   onClickGrave(domino: Domino): void {

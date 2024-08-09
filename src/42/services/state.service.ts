@@ -22,7 +22,7 @@ export class StateService {
   players: Array<Player> = [];
   set: Array<Domino> = [];
   showDebugIcons = false;
-  showDebugDominoes = true;
+  showDebugDominoes = false;
   showLog = true;
   showTrickDetails = true;
   turn = 0;

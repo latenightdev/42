@@ -19,7 +19,7 @@
         </div>
         <!-- Board -->
         <div class="col-md-4">
-          <div id="pit" class="player clearfix">
+          <div *ngIf="state.turn !== 99" id="pit" class="player clearfix">
             <h4>Board<span *ngIf="state.showDebugIcons" class="info-icon"><mat-icon class="info-icon" fontIcon="info" (click)="gameService.debug(state.board)"></mat-icon></span></h4>
             <p>
               <span *ngIf="state.turn > 0">Turn: {{ state.turn }}</span>
@@ -41,6 +41,11 @@
             </div>
             <button *ngIf="state.board.set.length === 4" (click)="onClickNext()" type="button" class="btn btn-outline-primary">Next Trick</button>
           </div>
+          <div *ngIf="state.turn === 99" class="game-results">
+            <h4>Game results</h4>
+            <p>{{ gameService.getGameResults() }}</p>
+            <button (click)="gameService.dealNewHand()" type="button" class="btn btn-outline-primary">New Game</button>
+          </div>          
         </div>
         <!-- Player 4 -->
         <div class="col-md-4">

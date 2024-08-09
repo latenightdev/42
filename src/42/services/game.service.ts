@@ -100,10 +100,18 @@ export class GameService {
     this.state.activePlayer = this.state.board.winningPlayer;
     this.state.grave.push(this.state.board);
     this.state.trick++;
+    this.state.turn++;
     this.state.board = new Trick(this.state.trick);
     if (this.state.activePlayer.index !== 0) {
       this.playerService.selectDominoToLead().then(domino => this.leadWithDomino(domino));
     }
+  }
+
+  getGameResults(): string {
+    const totalScore = this.playerService.getTotalScore(this.state.bid.player);
+    return totalScore >= this.state.bid.bid
+      ? this.state.bid.player.name + ' won the bid of ' + this.state.bid.bid + ' with a total score of ' + totalScore + ' !'
+      : this.state.bid.player.name + ' lost the bid of ' + this.state.bid.bid + ' with a total score of ' + totalScore + ' !';
   }
 
   dealNewHand(): void {
@@ -121,6 +129,7 @@ export class GameService {
   }
 
   dealTestHand(): void {
+    this.state.board = new Trick(0);
     this.state.isTestMode = true;
     this.beforeDeal();
     const testTrick = new Trick(1);

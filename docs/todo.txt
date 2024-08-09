@@ -1,8 +1,7 @@
 TODO:
-- board and grave to components
-- game over results instead of trick results (when any player's hand.length === 0)
+- bid: bid: 0 same as Pass?
 
-- domino.selected color = blue?
+- board and grave to components
 - log: scroll to bottom automatically?
 - loading: change color to blue?
 - random: investigate random deal method make better
@@ -24,4 +23,7 @@ TODO:
 
 
 DONE:
+* domino.selected color = blue
+* game over results
+* update design doc to match flow
 * EPIC: flow (lead): ability for player to analyze hand and declare bid/trump

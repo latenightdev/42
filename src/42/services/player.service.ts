@@ -21,64 +21,60 @@ export class PlayerService {
     this.state.activePlayer.isDeliberating = true;
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Condition #1: Last domino
         if (this.state.activePlayer.hand.length === 1) {
+          // F1. Last domino
           console.log(this.state.activePlayer.name + ' has only 1 domino remaining, playing...');
           resolve(this.state.activePlayer.hand[0]);
         } else {
-          // Condition #2: Follow lead domino
-          const matches: Array<Domino> = [];
-          for(let i = 0; i < this.state.activePlayer.hand.length; i++) {
-            const domino: Domino  = this.state.activePlayer.hand[i];
-            if (domino.primary === this.state.leadValue || domino.secondary === this.state.leadValue) {
-              matches.push(domino);
-            }
-          }
+          // F2. Follow lead domino
+          const matches: Array<Domino> = this.dominoService.findMatches(this.state.activePlayer.hand, this.state.leadValue);
           if (matches.length) {
-            // found matches to lead
             console.log(matches.length + ' matches found to follow lead value of: ' + this.state.leadValue);
-            // if only 1 match
             if (matches.length === 1) {
+              // F2a. Follow with only match
               console.log('Following with only match to lead: ' + matches[0].getValue(this.state.bid.trump));  
               resolve(matches[0]);
             } else {
-              // does highest match beat current winningDomino??
               const highDomino: Domino = this.dominoService.findHighDomino(matches);
               const winningDomino: Domino = this.state.board.winningDomino;
               if (!winningDomino.isDouble && (highDomino.isDouble || (highDomino.total > winningDomino.total))) {
-                // Condition #2a: Follow with highest match 
+                // F2b. Follow with highest match
                 console.log('Following with highest match to lead: ' + highDomino.getValue(this.state.bid.trump));  
                 resolve(highDomino);
               } else {
-                // Condition #2b: Follow with lowest match 
+                // F2c. Follow with lowest match
                 const lowDomino: Domino = this.dominoService.findLowDomino(matches);
                 console.log('Following with lowest match to lead: ' + lowDomino.getValue(this.state.bid.trump));
                 resolve(lowDomino);
               }            
             }
           } else {
-            // 0 matches to lead
+            // F3. No matches to follow lead domino AND partner is winning the trick
             console.log('0 matches found to follow lead value of: ' + this.state.leadValue);
             const partnerPlayer: Player = this.findPartner(this.state.activePlayer);
             if (this.state.board.winningPlayer === partnerPlayer) {
-              // Condition #2d: Follow with highest count to help partner
               const counts: Domino[] = this.dominoService.findCounts(this.state.activePlayer.hand);
               if (counts.length) {
-                if (counts.length > 1) {
+                if (counts.length === 1) {
+                  // F3a. Follow with only count
+                  console.log('Following with only count in hand: ' + counts[0].getValue(this.state.bid.trump));
+                  resolve(counts[0]);
+                } else {
+                  // F3b. Follow with highest count
                   const highCount: Domino = this.dominoService.findHighDomino(counts);
                   console.log('Following with highest count in hand: ' + highCount.getValue(this.state.bid.trump));
                   resolve(highCount);
-                } else {
-                  console.log('Following with only count in hand: ' + counts[0].getValue(this.state.bid.trump));
-                  resolve(counts[0]);
                 }   
               } else {
+                // F3c. Follow with lowest domino
                 const lowDomino: Domino = this.dominoService.findLowDomino(this.state.activePlayer.hand);
                 console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.state.bid.trump));
                 resolve(lowDomino);              
               }
             } else {
-              // Condition #2c: Follow with lowest domino
+              // F4. No matches to follow lead domino AND other team is winning the trick
+              // F4b. Follow with lowest domino
+              // TODO: add condition F4a and remove count from F4b
               const lowDomino: Domino = this.dominoService.findLowDomino(this.state.activePlayer.hand);
               console.log('Following with lowest domino in hand: ' + lowDomino.getValue(this.state.bid.trump));
               resolve(lowDomino);
@@ -95,37 +91,38 @@ export class PlayerService {
     this.state.activePlayer.isDeliberating = true;
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Condition #1: Last domino
         if (this.state.activePlayer.hand.length === 1) {
+          // L1. Last domino
           console.log(this.state.activePlayer.name + ' has only 1 domino remaining, playing...');
           resolve(this.state.activePlayer.hand[0]);
         } else {
-          // Condition #3?: AI would play highest trump or highest double or highest domino
           const trumps: Domino[] = this.dominoService.findTrumps(this.state.activePlayer.hand, this.state.bid.trump);
           if (trumps.length) {
-            // play highest trump
-            if (trumps.length > 1) {
+            if (trumps.length === 1) {
+              // L2a. Lead with only trump
+              console.log('Leading with only trump in hand: ' + trumps[0].getValue(this.state.bid.trump));
+              resolve(trumps[0]);
+            } else {
+              // L2b. Lead with highest trump
               const highTrump: Domino = this.dominoService.findHighDomino(trumps);
               console.log('Leading with highest trump in hand: ' + highTrump.getValue(this.state.bid.trump));
               resolve(highTrump);
-            } else {
-              console.log('Leading with only trump in hand: ' + trumps[0].getValue(this.state.bid.trump));
-              resolve(trumps[0]);
             }
           } else {
             const doubles: Domino[] = this.dominoService.findDoubles(this.state.activePlayer.hand);
             if (doubles.length) {
-              // play highest double
-              if (doubles.length > 1) {
+              if (doubles.length === 1) {
+                // L3a. Lead with only double
+                console.log('Leading with only double in hand: ' + doubles[0].getValue(this.state.bid.trump));
+                resolve(doubles[0]);
+              } else {
+                // L3b. Lead with highest double
                 const highDouble: Domino = this.dominoService.findHighDouble(doubles);
                 console.log('Leading with highest double in hand: ' + highDouble.getValue(this.state.bid.trump));
                 resolve(highDouble);
-              } else {
-                console.log('Leading with only double in hand: ' + doubles[0].getValue(this.state.bid.trump));
-                resolve(doubles[0]);
               }
             } else {
-              // play highest domino
+              // L4. Lead with highest domino
               const highDomino: Domino = this.dominoService.findHighDomino(this.state.activePlayer.hand);
               console.log('Leading with highest domino in hand: ' + highDomino.getValue(this.state.bid.trump));
               resolve(highDomino);
@@ -145,7 +142,6 @@ export class PlayerService {
         const doubles: Domino[] = this.dominoService.findDoubles(this.state.activePlayer.hand);
         let bid: Bid = {bid: 0, trump: 0, player: this.state.activePlayer};
         if (doubles.length) {
-          //let bid: Bid = {bid: 0, trump: doubles[0].primary};
           for(let i = 0; i < doubles.length; i++) {
             const double: Domino  = doubles[i];
             const numMatches = this.dominoService.findMatches(this.state.activePlayer.hand, double.primary).length;
@@ -154,7 +150,6 @@ export class PlayerService {
               bid.trump = double.primary;
             }
           }
-          console.log(bid);
           // TODO: simplified bidding for now
           if (bid.bid === 4) {
             bid.bid = 30;
@@ -181,14 +176,20 @@ export class PlayerService {
   }
 
   findPartner(activePlayer: Player): Player {
-    if (activePlayer.index === 1) {
+    if (activePlayer.index === 0) {
+      return this.state.players[2];
+    } else if (activePlayer.index === 1) {
       return this.state.players[3];
     } else if (activePlayer.index === 2) {
       return this.state.players[0];
     } else {
       return this.state.players[1];
     }
-  }  
+  }
+
+  getTotalScore(player: Player): number {
+    return player.score + this.findPartner(player).score;
+  }
 
   clearAllHands(): void {
     this.state.players[0].clearHand();
